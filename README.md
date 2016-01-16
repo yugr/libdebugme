@@ -9,6 +9,8 @@ and automatically run gdb (or, in future, any other debugger).
 
 # Usage
 
+Disclaimer: I have _not_ yet seriously tested this.
+
 Simply preload libdebugme.so to process and ask it to intercept
 "bad" events:
 ```
