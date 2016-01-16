@@ -28,10 +28,13 @@ all: bin/libdebugme.so
 install:
 	install -D bin/libdebugme.so $(DESTDIR)/lib
 
+DEBUGME_OPTIONS = handle_signals=1:debug_opts=-quiet -batch -ex backtrace
+
 check:
 	$(CC) $(CPPFLAGS) test/segv.c -o bin/a.out
-	export DEBUGME_OPTIONS='debug=1:handle_signals=1:debug_opts=-quiet -batch -ex backtrace'
-	LD_PRELOAD=bin/libdebugme.so bin/a.out
+	if DEBUGME_OPTIONS='$(DEBUGME_OPTIONS)' LD_PRELOAD=bin/libdebugme.so bin/a.out; then false; fi
+	$(CC) $(CPPFLAGS) test/segv.c -Wl,--no-as-needed bin/libdebugme.so -o bin/a.out
+	if DEBUGME_OPTIONS='$(DEBUGME_OPTIONS)' LD_LIBRARY_PATH=bin bin/a.out; then false; fi
 
 bin/libdebugme.so: $(OBJS) bin/FLAGS Makefile
 	$(CC) $(LDFLAGS) $(OBJS) $(LIBS) -o $@

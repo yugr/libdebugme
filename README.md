@@ -19,7 +19,10 @@ DEBUGME_OPTIONS=handle_signals=1 LD_PRELOAD=libdebugme.so make
 and it'll automatically run gdb on error.
 
 Alternatively you can manually link your app against libdebugme
-and/or run debugger explicitly (public APIs are in debugme.h).
+(but beware of --as-needed which is enabled by default in modern
+distros and will drop library dependency unless you call it
+explicitly) and/or run debugger explicitly (public APIs are
+in debugme.h).
 
 # Future plans
 
