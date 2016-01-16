@@ -14,6 +14,7 @@ unsigned dbg_flags;
 const char *dbg_opts;
 int init_done;
 int debug;
+int disabled;
 
 static void sighandler(int sig) {
   sig = sig;
@@ -22,7 +23,11 @@ static void sighandler(int sig) {
 }
 
 // TODO: optionally preserve existing handlers
+// TODO: init if not yet (here and in debugme_debug)
 EXPORT int debugme_install_sighandlers(unsigned dbg_flags_, const char *dbg_opts_) {
+  if(disabled)
+    return 0;
+
   dbg_flags = dbg_flags_;
   dbg_opts = dbg_opts_;
 
@@ -43,7 +48,9 @@ EXPORT int debugme_install_sighandlers(unsigned dbg_flags_, const char *dbg_opts
 }
 
 EXPORT int debugme_debug(unsigned dbg_flags, const char *dbg_opts) {
-  // TODO: select from the list of frontends (gdb+xterm, kdebug, ddd, etc.)
+  if(disabled)
+    return 0;
+  // TODO: select from the list of frontends (gdbserver, gdb+xterm, kdebug, ddd, etc.)
   return run_gdb(dbg_flags, dbg_opts ? dbg_opts : "");
 }
 

@@ -8,6 +8,27 @@
 
 #define INIT __attribute__((constructor))
 
+static int is_ptrace_allowed() {
+  FILE *p = fopen("/proc/sys/kernel/yama/ptrace_scope", "rb");
+  if(!p)
+    return 1;
+
+  char buf[128];
+  if(fread(buf, 1, sizeof(buf), p) <= 0 || buf[0] == '0') {
+    fclose(p);
+    return 1;
+  }
+
+  fputs(
+    "Attaching to process is not allowed by default in your distro. "
+    "Please do `echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope'. "
+    "For more details, check /etc/sysctl.d/*-ptrace.conf.\n",
+    stderr);
+  fclose(p);
+
+  return 0;
+}
+
 INIT static void init(void) {
   if(init_done)
     return;
@@ -57,6 +78,11 @@ INIT static void init(void) {
 
   if(opts_)
     free(opts_);
+
+  if(!is_ptrace_allowed()) {
+    disabled = 1;
+    return;
+  }
 
   if(debug) {
     fprintf(

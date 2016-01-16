@@ -5,5 +5,6 @@ extern unsigned dbg_flags;
 extern const char *dbg_opts;
 extern int init_done;
 extern int debug;
+extern int disabled;
 
 #endif
