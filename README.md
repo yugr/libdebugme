@@ -27,9 +27,10 @@ in debugme.h).
 # Future plans
 
 Here're some plans for libdebugme:
-* ensure thread-safety
+* it should be possible to continue program execution after debugger is attached
+* ensure thread and signal safety
 * support running gdb in a dedicated terminal (xterm, gnome-terminal, etc.)
-* support other debuggers (ddd, lldb, Visual Studio, etc.)
+* support other debuggers (gdbserver, ddd, lldb, Visual Studio, etc.)
 * use CMake
 * other minor TODO/FIXME are scattered all over the codebase
 
