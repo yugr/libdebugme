@@ -5,10 +5,8 @@
 
 #include <debugme.h>
 
+#include "common.h"
 #include "gdb.h"
-
-#define EXPORT __attribute__((visibility("default")))
-#define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
 
 unsigned dbg_flags;
 const char *dbg_opts;
@@ -48,6 +46,7 @@ EXPORT int debugme_install_sighandlers(unsigned dbg_flags_, const char *dbg_opts
 }
 
 EXPORT int debugme_debug(unsigned dbg_flags, const char *dbg_opts) {
+  // Note that this function and it's callee's should be signal-safe
   if(disabled)
     return 0;
   // TODO: select from the list of frontends (gdbserver, gdb+xterm, kdebug, ddd, etc.)

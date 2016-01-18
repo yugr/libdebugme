@@ -6,8 +6,6 @@
 #include <debugme.h>
 #include "common.h"
 
-#define INIT __attribute__((constructor))
-
 static int is_ptrace_allowed() {
   FILE *p = fopen("/proc/sys/kernel/yama/ptrace_scope", "rb");
   if(!p)
