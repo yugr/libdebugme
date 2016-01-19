@@ -6,6 +6,11 @@
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
 
+#define SAFE_MSG(msg) do { \
+  int res = write(STDERR_FILENO, msg, strlen(msg)); \
+  res = res; \
+} while(0)
+
 extern unsigned dbg_flags;
 extern const char *dbg_opts;
 extern int init_done;

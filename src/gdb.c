@@ -6,14 +6,11 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-// Strlen is not officially signal-safe but come on...
-#define SAFE_MSG(msg) do { \
-  int res = write(STDERR_FILENO, msg, strlen(msg)); \
-  res = res; \
-} while(0)
+#include "common.h"
 
 int run_gdb(unsigned dbg_flags, const char *dbg_opts) {
-  // Note that this function and it's callee's should be signal-safe
+  // Note that this function and it's callee's should be signal-safe.
+  // Strlen and sprintf are not officially signal-safe but come on...
 
   dbg_flags = dbg_flags; // TODO: handle dbg_flags
 

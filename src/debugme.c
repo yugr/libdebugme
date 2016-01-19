@@ -3,6 +3,8 @@
 #include <signal.h>
 #include <string.h>
 
+#include <unistd.h>
+
 #include <debugme.h>
 
 #include "common.h"
@@ -45,11 +47,25 @@ EXPORT int debugme_install_sighandlers(unsigned dbg_flags_, const char *dbg_opts
   return 1;
 }
 
+static int in_debugme_debug;
+
 EXPORT int debugme_debug(unsigned dbg_flags, const char *dbg_opts) {
   // Note that this function and it's callee's should be signal-safe
+
   if(disabled)
     return 0;
+
+  if(!in_debugme_debug)
+    in_debugme_debug = 1;  // TODO: make this thread-safe
+  else {
+    SAFE_MSG("libdebugme: can't attach two gdb in parallel, ignoring");
+    return 1;
+  }
+
   // TODO: select from the list of frontends (gdbserver, gdb+xterm, kdebug, ddd, etc.)
-  return run_gdb(dbg_flags, dbg_opts ? dbg_opts : "");
+  int res = run_gdb(dbg_flags, dbg_opts ? dbg_opts : "");
+
+  in_debugme_debug = 0;
+  return res;
 }
 
