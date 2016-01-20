@@ -58,9 +58,10 @@ help:
 	@echo "  check      Run regtests."
 	@echo ""
 	@echo "Build options:"
-	@echo "  DEBUG=1  Build debug version of code."
-	@echo "  ASAN=1   Build with ASan checks."
-	@echo "  UBSAN=1  Build with UBSan checks."
+	@echo "  DESTDIR=path  Specify installation root."
+	@echo "  DEBUG=1       Build debug version of code."
+	@echo "  ASAN=1        Build with ASan checks."
+	@echo "  UBSAN=1       Build with UBSan checks."
 
 clean:
 	rm -f bin/*
