@@ -8,6 +8,8 @@
 
 #include "common.h"
 
+EXPORT volatile int __debugme_go;
+
 int run_gdb(unsigned dbg_flags, const char *dbg_opts) {
   // Note that this function and it's callee's should be signal-safe.
   // Strlen and sprintf are not officially signal-safe but come on...
@@ -26,7 +28,7 @@ int run_gdb(unsigned dbg_flags, const char *dbg_opts) {
       pid_t ppid = getppid();
 
       char buf[256];
-      if(snprintf(buf, sizeof(buf), "gdb -ex 'attach %ld' %s", (long)ppid, dbg_opts) >= (int)sizeof(buf) - 1) {
+      if(snprintf(buf, sizeof(buf), "gdb -ex 'attach %ld' -ex 'set __debugme_go=1' %s", (long)ppid, dbg_opts) >= (int)sizeof(buf) - 1) {
         SAFE_MSG("libdebugme: increase size of buffer in run_gdb\n");
         exit(1);
       }
@@ -42,14 +44,11 @@ int run_gdb(unsigned dbg_flags, const char *dbg_opts) {
 
   // Parent
   // TODO: raise(SIGSTOP) and wait for gdb? But that's not signal/thread-safe...
-  // TODO: how to exit loop if user chooses to continue?
-  while(1) {
-    int status;
-    if(pid == waitpid(pid, &status, WNOHANG) && WIFEXITED(status)) {
-      return 0;
-    }
-    usleep(10);
+
+  while(!__debugme_go) {
+    usleep(10);  // TODO: get rid of this non-sigsafe function
   }
+  __debugme_go = 0;
 
   return 1;
 }

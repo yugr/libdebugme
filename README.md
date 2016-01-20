@@ -27,7 +27,7 @@ in debugme.h).
 # Future plans
 
 Here're some plans for libdebugme:
-* it should be possible to continue program execution after debugger is attached
+* break in user's (rather then libdebugme's) code when debugger attaches
 * ensure thread and signal safety
 * support running gdb in a dedicated terminal (xterm, gnome-terminal, etc.)
 * support other debuggers (gdbserver, ddd, lldb, Visual Studio, etc.)
