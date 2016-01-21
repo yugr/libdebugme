@@ -6,7 +6,7 @@
 #include <debugme.h>
 #include "common.h"
 
-static int is_ptrace_allowed() {
+static int is_ptrace_allowed(void) {
   FILE *p = fopen("/proc/sys/kernel/yama/ptrace_scope", "rb");
   if(!p)
     return 1;

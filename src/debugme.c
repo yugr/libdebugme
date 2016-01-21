@@ -16,6 +16,10 @@ int init_done;
 int debug;
 int disabled;
 
+// Interface with debugger
+EXPORT volatile int __debugme_go;
+EXPORT void __debugme_break(void) {}
+
 static void sighandler(int sig) {
   sig = sig;
   debugme_debug(dbg_flags, dbg_opts);
@@ -64,6 +68,15 @@ EXPORT int debugme_debug(unsigned dbg_flags, const char *dbg_opts) {
 
   // TODO: select from the list of frontends (gdbserver, gdb+xterm, kdebug, ddd, etc.)
   int res = run_gdb(dbg_flags, dbg_opts ? dbg_opts : "");
+
+  // TODO: raise(SIGSTOP) and wait for gdb? But that's not signal/thread-safe...
+
+  while(!__debugme_go) {  // Wait for debugger to unblock us
+    usleep(10);  // TODO: get rid of this non-sigsafe function
+  }
+  __debugme_go = 0;
+
+  __debugme_break();
 
   in_debugme_debug = 0;
   return res;
