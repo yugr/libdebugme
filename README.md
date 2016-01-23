@@ -24,6 +24,13 @@ distros and will drop library dependency unless you call it
 explicitly) and/or run debugger explicitly (public APIs are
 in debugme.h).
 
+Available runtime options:
+* xterm - run debugger in a separate xterm
+* handle\_signals - attach debugger on all bad signals
+  (SIGSEGV, SIGILL, etc.)
+* debug - print diagnostic info
+* debug\_opts - additional options to pass to debugger
+
 # Future plans
 
 Here're some plans for libdebugme:

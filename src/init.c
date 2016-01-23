@@ -1,10 +1,10 @@
+#include <debugme.h>
+#include "common.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <signal.h>
 #include <string.h>
-
-#include <debugme.h>
-#include "common.h"
 
 static int is_ptrace_allowed(void) {
   FILE *p = fopen("/proc/sys/kernel/yama/ptrace_scope", "rb");

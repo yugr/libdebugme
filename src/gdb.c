@@ -1,3 +1,6 @@
+#include <debugme.h>
+#include "common.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -6,13 +9,11 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#include "common.h"
-
 int run_gdb(unsigned dbg_flags, const char *dbg_opts) {
   // Note that this function and it's callee's should be signal-safe.
   // Strlen and sprintf are not officially signal-safe but come on...
 
-  dbg_flags = dbg_flags; // TODO: handle dbg_flags
+  // TODO: check if any gdb is already attached
 
   int pid = fork();
   switch(pid) {
@@ -41,7 +42,11 @@ int run_gdb(unsigned dbg_flags, const char *dbg_opts) {
         exit(1);
       }
 
-      execl("/bin/bash", "/bin/bash", "-c", buf, (char *)0);
+      if(dbg_flags & DEBUGME_XTERM) {
+        execl("/usr/bin/xterm", "/usr/bin/xterm", "-e", buf, (char *)0);
+      } else {
+        execl("/bin/bash", "/bin/bash", "-c", buf, (char *)0);
+      }
 
       SAFE_MSG("libdebugme: failed to run gdb command: /bin/bash -c ");
       SAFE_MSG(buf);

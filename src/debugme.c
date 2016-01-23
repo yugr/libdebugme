@@ -1,14 +1,13 @@
+#include <debugme.h>
+#include "common.h"
+#include "gdb.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <signal.h>
 #include <string.h>
 
 #include <unistd.h>
-
-#include <debugme.h>
-
-#include "common.h"
-#include "gdb.h"
 
 unsigned dbg_flags;
 const char *dbg_opts;
@@ -23,7 +22,7 @@ EXPORT void __debugme_break(void) {} // TODO: use debug break instead?
 static void sighandler(int sig) {
   sig = sig;
   debugme_debug(dbg_flags, dbg_opts);
-  exit(1);
+//  exit(1);
 }
 
 // TODO: optionally preserve existing handlers
