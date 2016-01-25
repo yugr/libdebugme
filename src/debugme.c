@@ -61,7 +61,7 @@ EXPORT int debugme_debug(unsigned dbg_flags, const char *dbg_opts) {
   if(!in_debugme_debug)
     in_debugme_debug = 1;  // TODO: make this thread-safe
   else {
-    SAFE_MSG("libdebugme: can't attach two gdb in parallel, ignoring");
+    SAFE_MSG("libdebugme: can't attach more than one debugger simultaneously\n");
     return 1;
   }
 
@@ -71,8 +71,14 @@ EXPORT int debugme_debug(unsigned dbg_flags, const char *dbg_opts) {
 
   // TODO: raise(SIGSTOP) and wait for gdb? But that's not signal/thread-safe...
 
+  size_t us = 0;
   while(!__debugme_go) {  // Wait for debugger to unblock us
-    usleep(10);  // TODO: get rid of this non-sigsafe function
+    usleep(10);
+    us += 10;
+    if(us > 5000) {
+      SAFE_MSG("libdebugme: debugger failed to attach");
+      return 0;
+    }
   }
   __debugme_go = 0;
 
