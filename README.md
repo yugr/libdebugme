@@ -34,9 +34,7 @@ Available runtime options:
 # Future plans
 
 Here're some plans for libdebugme:
-* break in user's (rather then libdebugme's) code when debugger attaches
 * ensure thread and signal safety
-* support running gdb in a dedicated terminal (xterm, gnome-terminal, etc.)
 * support other debuggers (gdbserver, ddd, lldb, Visual Studio, etc.)
 * use CMake
 * other minor TODO/FIXME are scattered all over the codebase
