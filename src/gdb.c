@@ -9,14 +9,29 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+static pid_t gdb_pid = -1;
+
 int run_gdb(unsigned dbg_flags, const char *dbg_opts) {
   // Note that this function and it's callee's should be signal-safe.
   // Strlen and sprintf are not officially signal-safe but come on...
 
-  // TODO: check if any gdb is already attached
+  // Check if gdb is already attached
+  if(gdb_pid != -1) {
+    int status = 0;
+    pid_t res_pid = waitpid(gdb_pid, &status, WNOHANG);
+    if(res_pid == -1) {
+      SAFE_MSG("libdebugme: failed to check status of debugger\n");
+      return 0;
+    } else if(res_pid == 0
+              || (res_pid == gdb_pid && !WIFEXITED(status) && !WIFSIGNALED(status))) {
+      SAFE_MSG("libdebugme: can't attach more than one debugger simultaneously\n");
+      return 0;
+    }
+    gdb_pid = -1;
+  }
 
-  int pid = fork();
-  switch(pid) {
+  gdb_pid = fork();
+  switch(gdb_pid) {
   case -1:
     SAFE_MSG("libdebugme: failed to fork\n");
     return 0;
