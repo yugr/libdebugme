@@ -46,10 +46,10 @@ int run_gdb(unsigned dbg_flags, const char *dbg_opts) {
                            "gdb -ex 'attach %ld' "
                            // Unblock parent process
                            "-ex 'set __debugme_go=1' "
-                           // Wait untils it exits libdebugme
-                           "-ex 'break __debugme_break' "
+                           // Wait untils it breaks
                            "-ex continue "
-                           "-ex 'delete 1' "
+                           // Return from raise()
+                           "-ex finish "
                            // Give control to user
                            "%s", (long)ppid, dbg_opts);
       if(nread >= (int)sizeof(buf) - 1) {

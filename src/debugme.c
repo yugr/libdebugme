@@ -17,7 +17,6 @@ int disabled;
 
 // Interface with debugger
 EXPORT volatile int __debugme_go;
-EXPORT void __debugme_break(void) {} // TODO: use debug break instead?
 
 static void sighandler(int sig) {
   sig = sig;
@@ -82,7 +81,7 @@ EXPORT int debugme_debug(unsigned dbg_flags, const char *dbg_opts) {
   }
   __debugme_go = 0;
 
-  __debugme_break();
+  raise(SIGTRAP);
 
   in_debugme_debug = 0;
   return 1;
