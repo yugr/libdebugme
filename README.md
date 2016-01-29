@@ -7,6 +7,9 @@ This project solves this by providing a library (libdebugme.so)
 which can be linked or even preloaded to system to catch signals
 and automatically run gdb (or, in future, any other debugger).
 
+The project is BSD-licensed. It has no fancy dependencies,
+just Glibc, Bash and GDB.
+
 # Usage
 
 Disclaimer: I have _not_ yet seriously tested this.
