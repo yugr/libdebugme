@@ -49,14 +49,13 @@ EXPORT int debugme_install_sighandlers(unsigned dbg_flags_, const char *dbg_opts
   return 1;
 }
 
-static int in_debugme_debug;
-
 EXPORT int debugme_debug(unsigned dbg_flags, const char *dbg_opts) {
   // Note that this function and it's callee's should be signal-safe
 
   if(disabled)
     return 0;
 
+  static int in_debugme_debug;
   if(!in_debugme_debug)
     in_debugme_debug = 1;  // TODO: make this thread-safe
   else {
