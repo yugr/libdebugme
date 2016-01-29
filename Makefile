@@ -19,7 +19,7 @@ endif
 
 DESTDIR = /usr
 
-OBJS = bin/gdb.o bin/debugme.o bin/init.o
+OBJS = bin/gdb.o bin/debugme.o bin/init.o bin/common.o
 
 $(shell mkdir -p bin)
 
