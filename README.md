@@ -12,7 +12,8 @@ just Glibc, Bash and GDB.
 
 # Usage
 
-Disclaimer: I have _not_ yet seriously tested this.
+Disclaimer: I have _not_ yet seriously tested this although
+it seems to work robustly on Ubuntu 14.04 and Fedora 22.
 
 Simply preload libdebugme.so to process and ask it to intercept
 "bad" events:
