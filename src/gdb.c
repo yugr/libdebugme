@@ -65,12 +65,18 @@ int run_gdb(unsigned dbg_flags, const char *dbg_opts) {
       }
 
       if(dbg_flags & DEBUGME_XTERM) {
+	// xterm will run $SHELL to interpret that command line
+	// It's the user's responsibility to ensure the dbg_opts
+	// use the right syntax for that shell.
         execl("/usr/bin/xterm", "/usr/bin/xterm", "-e", buf, (char *)0);
       } else {
-        execl("/bin/bash", "/bin/bash", "-c", buf, (char *)0);
+	char *shell = getenv("SHELL");
+	if (!shell) shell = "/bin/sh";
+
+        execl(shell, shell, "-c", buf, (char *)0);
       }
 
-      SAFE_MSG("libdebugme: failed to run gdb command: /bin/bash -c ");
+      SAFE_MSG("libdebugme: failed to run gdb command: ");
       SAFE_MSG(buf);
       SAFE_MSG("\n");
       _exit(1);
