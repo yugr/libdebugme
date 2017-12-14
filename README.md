@@ -8,7 +8,7 @@ which can be linked or even preloaded to system to catch signals
 and automatically run gdb (or, in future, any other debugger).
 
 The project is BSD-licensed. It has no fancy dependencies,
-just Glibc, Bash and GDB.
+just Glibc and GDB.
 
 # Usage
 
@@ -33,7 +33,9 @@ Available runtime options:
 * handle\_signals - attach debugger on all bad signals
   (SIGSEGV, SIGILL, etc.)
 * debug - print diagnostic info
-* debug\_opts - additional options to pass to debugger
+* debug\_opts - additional options to pass to debugger.
+  Note: the debugger command line, including those options is
+  interpreted by $SHELL (typically your login shell).
 
 # Future plans
 
