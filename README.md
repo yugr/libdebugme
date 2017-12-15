@@ -22,16 +22,17 @@ DEBUGME_OPTIONS=handle_signals=1 LD_PRELOAD=libdebugme.so make
 ```
 and it'll automatically run gdb on error.
 
-Alternatively you can manually link your app against libdebugme
+Alternatively you can `dlopen` libdebug me at runtime or
+explicitly link your app against it
 (but beware of --as-needed which is enabled by default in modern
 distros and will drop library dependency unless you call it
-explicitly) and/or run debugger explicitly (public APIs are
-in debugme.h).
+explicitly). In these cases you'll need to initialize library
+explicitly via APIs are in debugme.h.
 
 Available runtime options:
 * xterm - run debugger in a separate xterm
 * handle\_signals - attach debugger on all bad signals
-  (SIGSEGV, SIGILL, etc.)
+  (SIGSEGV, SIGABRT, SIGILL, etc.)
 * debug - print diagnostic info
 * debug\_opts - additional options to pass to debugger.
   Note: the debugger command line, including those options is
