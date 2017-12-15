@@ -13,21 +13,22 @@
 #include <signal.h>
 #include <string.h>
 
-static int check_ptrace_allowed(void) {
+static int is_ptrace_allowed(void) {
   FILE *p = fopen("/proc/sys/kernel/yama/ptrace_scope", "rb");
   if(!p)
     return 1;
 
-  char buf[128];
-  if(fread(buf, 1, sizeof(buf), p) <= 0 || buf[0] == '0') {
+  char buf[16];
+  if(fread(buf, 1, sizeof(buf), p) <= 0
+      || buf[0] == '0'
+      || buf[0] == '1') {  // 1 can be overriden with PR_SET_PTRACER
     fclose(p);
     return 1;
   }
 
   fputs(
-    "Attaching to process is not allowed by default in your distro. "
-      "You may need to do `echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope'. "
-      "To suppress this message, run with with `DEBUGME_OPTIONS=quiet=1'.\n",
+    "Attaching to process is disabled in your distro. "
+      "You need to do `echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope'.\n",
     stderr);
   fclose(p);
 
@@ -86,8 +87,10 @@ INIT static void init(void) {
   if(opts_)
     free(opts_);
 
-  if (!quiet)
-    check_ptrace_allowed();
+  if(!is_ptrace_allowed()) {
+    disabled = 1;
+    return;
+  }
 
   if(debug) {
     fprintf(
