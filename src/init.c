@@ -13,7 +13,7 @@
 #include <signal.h>
 #include <string.h>
 
-static int is_ptrace_allowed(void) {
+static int check_ptrace_allowed(void) {
   FILE *p = fopen("/proc/sys/kernel/yama/ptrace_scope", "rb");
   if(!p)
     return 1;
@@ -26,8 +26,8 @@ static int is_ptrace_allowed(void) {
 
   fputs(
     "Attaching to process is not allowed by default in your distro. "
-    "Please do `echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope'. "
-    "For more details, check /etc/sysctl.d/*-ptrace.conf.\n",
+      "You may need to do `echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope'. "
+      "To suppress this message, run with with `DEBUGME_OPTIONS=quiet=1'.\n",
     stderr);
   fclose(p);
 
@@ -74,6 +74,8 @@ INIT static void init(void) {
         handle_signals = atoi(value);
       } else if(0 == strcmp(name, "debug_opts")) {
         dbg_opts = strdup(value);
+      } else if(0 == strcmp(name, "quiet")) {
+        quiet = atoi(value);
       } else {
         fprintf(stderr, "debugme: unknown option '%s'\n", name);
         exit(1);
@@ -84,10 +86,8 @@ INIT static void init(void) {
   if(opts_)
     free(opts_);
 
-  if(!is_ptrace_allowed()) {
-    disabled = 1;
-    return;
-  }
+  if (!quiet)
+    check_ptrace_allowed();
 
   if(debug) {
     fprintf(

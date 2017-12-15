@@ -21,6 +21,7 @@ const char *dbg_opts;
 int init_done;
 int debug;
 int disabled;
+int quiet;
 
 // Interface with debugger
 EXPORT volatile int __debugme_go;

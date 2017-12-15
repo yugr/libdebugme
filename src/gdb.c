@@ -15,6 +15,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <sys/prctl.h>
 
 static pid_t gdb_pid = -1;
 
@@ -36,6 +37,11 @@ int run_gdb(unsigned dbg_flags, const char *dbg_opts) {
     }
     gdb_pid = -1;
   }
+
+#ifdef PR_SET_PTRACER_ANY
+  // TODO: Only do this in parent (but then need to delay starting gdb in child)
+  prctl(PR_SET_PTRACER, PR_SET_PTRACER_ANY, 0, 0, 0);
+#endif
 
   gdb_pid = fork();
   switch(gdb_pid) {

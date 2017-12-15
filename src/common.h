@@ -23,5 +23,6 @@ extern const char *dbg_opts;
 extern int init_done;
 extern int debug;
 extern int disabled;
+extern int quiet;
 
 #endif
