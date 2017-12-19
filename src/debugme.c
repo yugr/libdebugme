@@ -54,6 +54,18 @@ EXPORT int debugme_install_sighandlers(unsigned dbg_flags_, const char *dbg_opts
       fprintf(stderr, "libdebugme: failed to intercept signal %d (%s)\n", sig, signame);
     }
   }
+
+  if (dbg_flags & DEBUGME_ALTSTACK) {
+    static char ALIGNED(16) stack[SIGSTKSZ];
+    stack_t st;
+    st.ss_sp = stack;
+    st.ss_flags = 0;
+    st.ss_size = sizeof(stack);
+    if(0 != sigaltstack(&st, 0)) {
+      perror("libdebugme: failed to install altstack");
+    }
+  }
+
   return 1;
 }
 

@@ -10,6 +10,7 @@
 
 #define INIT __attribute__((constructor))
 #define EXPORT __attribute__((visibility("default")))
+#define ALIGNED(n) __attribute__((aligned(n)))
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
 

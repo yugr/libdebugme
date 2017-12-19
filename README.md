@@ -20,7 +20,9 @@ Simply preload libdebugme.so to process and ask it to intercept
 ```
 DEBUGME_OPTIONS=handle_signals=1 LD_PRELOAD=libdebugme.so make
 ```
-and it'll automatically run gdb on error.
+and it'll automatically run gdb on error. For particularly bad errors
+which overflow stack you may need to append `...:altstack=1` to
+`DEBUGME_OPTIONS`.
 
 Alternatively you can `dlopen` libdebug me at runtime or
 explicitly link your app against it
@@ -37,6 +39,8 @@ Available runtime options:
 * debug\_opts - additional options to pass to debugger.
   Note: the debugger command line, including those options is
   interpreted by $SHELL (typically your login shell).
+* altstack - run signal handlers on alternative stack
+  (needs handle\_signals)
 
 # Future plans
 

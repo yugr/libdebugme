@@ -77,6 +77,8 @@ INIT static void init(void) {
         dbg_opts = strdup(value);
       } else if(0 == strcmp(name, "quiet")) {
         quiet = atoi(value);
+      } else if(0 == strcmp(name, "altstack")) {
+        SET_BIT(DEBUGME_ALTSTACK);
       } else {
         fprintf(stderr, "debugme: unknown option '%s'\n", name);
         exit(1);

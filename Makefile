@@ -33,7 +33,7 @@ all: bin/libdebugme.so
 install:
 	install -D bin/libdebugme.so $(DESTDIR)/lib
 
-DEBUGME_OPTIONS = handle_signals=1:quiet=1:debug_opts=-quiet -batch -ex backtrace
+DEBUGME_OPTIONS = handle_signals=1:quiet=1:altstack=1:debug_opts=-quiet -batch -ex backtrace
 
 check:
 	$(CC) $(CPPFLAGS) test/segv.c -o bin/a.out

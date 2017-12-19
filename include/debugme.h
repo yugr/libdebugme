@@ -10,6 +10,7 @@
 
 enum {
   DEBUGME_XTERM = 1 << 0,
+  DEBUGME_ALTSTACK = 1 << 1,
 };
 
 // These APIs are not thread-safe.
