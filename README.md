@@ -26,10 +26,10 @@ which overflow stack you may need to append `...:altstack=1` to
 
 Alternatively you can `dlopen` libdebug me at runtime or
 explicitly link your app against it
-(but beware of --as-needed which is enabled by default in modern
+(but beware of `--as-needed` which is enabled by default in modern
 distros and will drop library dependency unless you call it
 explicitly). In these cases you'll need to initialize library
-explicitly via APIs are in debugme.h.
+explicitly via APIs are in `debugme.h`.
 
 Available runtime options:
 * xterm - run debugger in a separate xterm
