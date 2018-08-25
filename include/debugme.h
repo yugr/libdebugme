@@ -13,8 +13,10 @@ enum {
   DEBUGME_ALTSTACK = 1 << 1,
 };
 
-// These APIs are not thread-safe.
+// Install handlers to attach GDB on common signals. These function is not thread-safe.
 int debugme_install_sighandlers(unsigned flags, const char *dbg_opts);
+
+// Attach GDB and drop into it's command prompt. These function is not thread-safe.
 int debugme_debug(unsigned flags, const char *dbg_opts);
 
 #endif

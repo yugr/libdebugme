@@ -24,12 +24,12 @@ and it'll automatically run gdb on error. For particularly bad errors
 which overflow stack you may need to append `...:altstack=1` to
 `DEBUGME_OPTIONS`.
 
-Alternatively you can `dlopen` libdebug me at runtime or
+Alternatively you can `dlopen` libdebugme at runtime or
 explicitly link your app against it
 (but beware of `--as-needed` which is enabled by default in modern
 distros and will drop library dependency unless you call it
 explicitly). In these cases you'll need to initialize library
-explicitly via APIs are in `debugme.h`.
+explicitly via APIs from `debugme.h`.
 
 Available runtime options:
 * xterm - run debugger in a separate xterm
@@ -46,7 +46,7 @@ Available runtime options:
 
 Here're some plans for libdebugme:
 * ensure thread and signal safety
-* support other debuggers (gdbserver, ddd, lldb, Visual Studio, etc.)
+* support other debuggers (ddd, lldb, Visual Studio, etc.)
 * use CMake
 * other minor TODO/FIXME are scattered all over the codebase
 
