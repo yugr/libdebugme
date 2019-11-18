@@ -69,7 +69,7 @@ EXPORT int debugme_install_sighandlers(unsigned dbg_flags_, const char *dbg_opts
   return 1;
 }
 
-EXPORT int debugme_debug(unsigned dbg_flags, const char *dbg_opts) {
+EXPORT int debugme_debug(unsigned dbg_flags_, const char *dbg_opts_) {
   // Note that this function and it's callee's should be signal-safe
 
   if(disabled)
@@ -84,7 +84,7 @@ EXPORT int debugme_debug(unsigned dbg_flags, const char *dbg_opts) {
   }
 
   // TODO: select from the list of frontends (gdbserver, gdb+xterm, kdebug, ddd, etc.)
-  if(!run_gdb(dbg_flags, dbg_opts ? dbg_opts : ""))
+  if(!run_gdb(dbg_flags_, dbg_opts_ ? dbg_opts_ : ""))
     return 0;
 
   // TODO: raise(SIGSTOP) and wait for gdb? But that's not signal/thread-safe...
