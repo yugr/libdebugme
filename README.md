@@ -1,3 +1,5 @@
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/yugr/libdebugme.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/yugr/libdebugme/alerts/)
+
 # What is this?
 
 It may occasionally be hard to run failing program under debugger
