@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/yugr/libdebugme.svg?branch=master)](https://travis-ci.org/yugr/libdebugme)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/yugr/libdebugme.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/yugr/libdebugme/alerts/)
 
 # What is this?
