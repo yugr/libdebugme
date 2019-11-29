@@ -27,7 +27,7 @@ int quiet;
 EXPORT volatile int __debugme_go;
 
 static void sighandler(int sig) {
-  sig = sig;
+  (void)sig;
   debugme_debug(dbg_flags, dbg_opts);
   exit(1);
 }
