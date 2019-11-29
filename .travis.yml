@@ -1,0 +1,17 @@
+# TODO:
+# * run tests
+# * coverage
+# * sanitizers
+# * valgrind
+# * CSA
+
+language: c
+os: linux
+script: make clean all
+jobs:
+  include:
+    - stage: baseline
+      name: gcc
+      compiler: gcc
+    - name: clang
+      compiler: clang
