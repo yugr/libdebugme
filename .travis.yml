@@ -15,3 +15,19 @@ jobs:
       compiler: gcc
     - name: clang
       compiler: clang
+
+env:
+  global:
+   - secure: "GnYF2fUFMpaVd7QTMjxhvKQskceVbuF7ImqWiDKahWYB1Tc5RCQKGah/RwwdX+xnKs6o/EUK+e8YW8olj+bpt9krIh8SVZWEU3rLW5VXdmrknWGI+JJpauhSm8jV4BytCCCTJOUpb6LhRje1Gb+oWrdgxdJxqvBWnKrq+opCzeUbd7t658zcbMyo61i06qgbu0HGoH/56EdyW6AEMiQN3KSffWmlLa1OnP1tzYZSUePdlph/G8rpQwdewj1xgcNUqwWYs5pkfkABde0YDX7MFD1glcWORlSUJC+zAVJNPUzrzeN7KLDj65fvNwQDhruYKbL/mCg1H4XfqALQRVqO05M4XrzsxK3NStia+1wSAdM816F3NeEHufiEYlHgV4T8iZjq8Zg3u7S98F8KanEEhcl2b96XGlez7Z1hByCjGxd5IvuHcHdPMA10gexLyLMFP8GzpoxxGOCJUWQlNevhRO9XuCmZYaX0XR6RbVgiPIZJ17VjMFhIa10mXmTgiq3GaeTPnAC+zsc9mSCiMLy77Lrfbxa6TgOAscO0j+fa5Nf3iyhMTwsb9pjyddTEyowuw5QLViFN9qQEd31c9BtoVTRf7ANbCPu9OYaI1p/i6FyiTTLzFLdyhOFXBmMyEsrMslthdYj1CJM25dojqjQYMjnHCnFFFUYNBfbef4Ev80U="
+
+before_install:
+  - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+
+addons:
+  coverity_scan:
+    project:
+      name: "yugr/libdebugme"
+      description: "Automatically spawn gdb on error."
+    notification_email: tetra2005@gmail.com
+    build_command: make clean all
+    branch_pattern: coverity_scan
