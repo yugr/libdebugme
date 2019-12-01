@@ -1,4 +1,4 @@
-# Copyright 2016-2017 Yury Gribov
+# Copyright 2016-2019 Yury Gribov
 # 
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE.txt file.
@@ -38,19 +38,8 @@ all: bin/libdebugme.so
 install:
 	install -D bin/libdebugme.so $(DESTDIR)/lib
 
-DEBUGME_OPTIONS = handle_signals=1:quiet=1:altstack=1:debug_opts=-quiet -batch -ex backtrace -ex "call exit(0)"
-
 check:
-	$(CC) $(CPPFLAGS) test/segv.c -o bin/a.out
-	DEBUGME_OPTIONS='$(DEBUGME_OPTIONS)' LD_PRELOAD=bin/libdebugme.so bin/a.out 2>&1 | tee test.ref
-	grep -q 'Program received signal SIGTRAP' test.ref
-	grep -q '^#0.*debugme_debug' test.ref
-	grep -q '^#[0-9].*main' test.ref
-	$(CC) $(CPPFLAGS) test/segv.c -Wl,--no-as-needed bin/libdebugme.so -o bin/a.out
-	DEBUGME_OPTIONS='$(DEBUGME_OPTIONS)' LD_LIBRARY_PATH=bin bin/a.out 2>&1 | tee test.ref
-	grep -q 'Program received signal SIGTRAP' test.ref
-	grep -q '^#0.*debugme_debug' test.ref
-	grep -q '^#[0-9].*main' test.ref
+	test/run.sh
 
 bin/libdebugme.so: $(OBJS) bin/FLAGS Makefile
 	$(CC) $(LDFLAGS) $(OBJS) $(LIBS) -o $@
