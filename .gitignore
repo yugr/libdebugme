@@ -1,3 +1,4 @@
 core
 bin/*
 .*.swp
+test.ref

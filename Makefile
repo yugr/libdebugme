@@ -37,9 +37,15 @@ DEBUGME_OPTIONS = handle_signals=1:quiet=1:altstack=1:debug_opts=-quiet -batch -
 
 check:
 	$(CC) $(CPPFLAGS) test/segv.c -o bin/a.out
-	if DEBUGME_OPTIONS='$(DEBUGME_OPTIONS)' LD_PRELOAD=bin/libdebugme.so bin/a.out; then false; fi
+	if DEBUGME_OPTIONS='$(DEBUGME_OPTIONS)' LD_PRELOAD=bin/libdebugme.so bin/a.out 2>&1 | tee test.ref; then false; fi
+	grep -q 'Program received signal SIGTRAP' test.ref
+	grep -q '^#0.*debugme_debug'
+	grep -q '^#[0-9].*main'
 	$(CC) $(CPPFLAGS) test/segv.c -Wl,--no-as-needed bin/libdebugme.so -o bin/a.out
-	if DEBUGME_OPTIONS='$(DEBUGME_OPTIONS)' LD_LIBRARY_PATH=bin bin/a.out; then false; fi
+	if DEBUGME_OPTIONS='$(DEBUGME_OPTIONS)' LD_LIBRARY_PATH=bin bin/a.out 2>&1 | tee test.ref; then false; fi
+	grep -q 'Program received signal SIGTRAP' test.ref
+	grep -q '^#0.*debugme_debug'
+	grep -q '^#[0-9].*main'
 
 bin/libdebugme.so: $(OBJS) bin/FLAGS Makefile
 	$(CC) $(LDFLAGS) $(OBJS) $(LIBS) -o $@

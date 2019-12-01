@@ -1,11 +1,10 @@
 # TODO:
-# * run tests
 # * coverage
 # * checkers: sanitizers, valgrind, CSA
 
 language: c
 os: linux
-script: make clean all
+script: scripts/travis.sh
 jobs:
   include:
     - stage: baseline
