@@ -12,6 +12,12 @@ jobs:
       compiler: gcc
     - name: clang
       compiler: clang
+    - stage: coverage
+      name: gcc-coverage
+      compiler: gcc
+      env:
+        - COVERAGE=1
+        - CODECOV_TOKEN="a55c21ce-0e07-465b-97fe-34202f889cf8"
 addons:
   apt:
     packages:

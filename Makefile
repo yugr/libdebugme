@@ -21,6 +21,11 @@ ifneq (,$(UBSAN))
   CFLAGS += -fsanitize=undefined
   LDFLAGS += -fsanitize=undefined
 endif
+ifneq (,$(COVERAGE))
+  DEBUG = 1
+  CFLAGS += -O0 -DNDEBUG --coverage
+  LDFLAGS += --coverage
+endif
 
 DESTDIR = /usr
 
