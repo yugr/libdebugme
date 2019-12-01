@@ -39,7 +39,7 @@ install:
 	install -D bin/libdebugme.so $(DESTDIR)/lib
 
 check:
-	test/run.sh
+	test/test.sh
 
 bin/libdebugme.so: $(OBJS) bin/FLAGS Makefile
 	$(CC) $(LDFLAGS) $(OBJS) $(LIBS) -o $@
