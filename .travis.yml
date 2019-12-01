@@ -1,9 +1,7 @@
 # TODO:
 # * run tests
 # * coverage
-# * sanitizers
-# * valgrind
-# * CSA
+# * checkers: sanitizers, valgrind, CSA
 
 language: c
 os: linux
