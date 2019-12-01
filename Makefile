@@ -33,19 +33,19 @@ all: bin/libdebugme.so
 install:
 	install -D bin/libdebugme.so $(DESTDIR)/lib
 
-DEBUGME_OPTIONS = handle_signals=1:quiet=1:altstack=1:debug_opts=-quiet -batch -ex backtrace
+DEBUGME_OPTIONS = handle_signals=1:quiet=1:altstack=1:debug_opts=-quiet -batch -ex backtrace -ex "call exit(0)"
 
 check:
 	$(CC) $(CPPFLAGS) test/segv.c -o bin/a.out
-	if DEBUGME_OPTIONS='$(DEBUGME_OPTIONS)' LD_PRELOAD=bin/libdebugme.so bin/a.out 2>&1 | tee test.ref; then false; fi
+	DEBUGME_OPTIONS='$(DEBUGME_OPTIONS)' LD_PRELOAD=bin/libdebugme.so bin/a.out 2>&1 | tee test.ref
 	grep -q 'Program received signal SIGTRAP' test.ref
-	grep -q '^#0.*debugme_debug'
-	grep -q '^#[0-9].*main'
+	grep -q '^#0.*debugme_debug' test.ref
+	grep -q '^#[0-9].*main' test.ref
 	$(CC) $(CPPFLAGS) test/segv.c -Wl,--no-as-needed bin/libdebugme.so -o bin/a.out
-	if DEBUGME_OPTIONS='$(DEBUGME_OPTIONS)' LD_LIBRARY_PATH=bin bin/a.out 2>&1 | tee test.ref; then false; fi
+	DEBUGME_OPTIONS='$(DEBUGME_OPTIONS)' LD_LIBRARY_PATH=bin bin/a.out 2>&1 | tee test.ref
 	grep -q 'Program received signal SIGTRAP' test.ref
-	grep -q '^#0.*debugme_debug'
-	grep -q '^#[0-9].*main'
+	grep -q '^#0.*debugme_debug' test.ref
+	grep -q '^#[0-9].*main' test.ref
 
 bin/libdebugme.so: $(OBJS) bin/FLAGS Makefile
 	$(CC) $(LDFLAGS) $(OBJS) $(LIBS) -o $@

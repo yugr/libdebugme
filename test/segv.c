@@ -12,6 +12,6 @@
 int main() {
   volatile int *p = 0;
   *p = 0;
-
+  exit(0);
   return 0;
 }
