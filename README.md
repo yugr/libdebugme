@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/yugr/libdebugme.svg?branch=master)](https://travis-ci.org/yugr/libdebugme)
+[![codecov](https://codecov.io/gh/yugr/libdebugme/branch/master/graph/badge.svg)](https://codecov.io/gh/yugr/libdebugme)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/yugr/libdebugme.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/yugr/libdebugme/alerts/)
 [![Coverity Scan](https://scan.coverity.com/projects/19944/badge.svg)](https://scan.coverity.com/projects/yugr-sortcheck)
 
