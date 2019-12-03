@@ -1,3 +1,4 @@
+[![License](http://img.shields.io/:license-MIT-blue.svg)](https://github.com/yugr/libdebugme/blob/master/LICENSE.txt)
 [![Build Status](https://travis-ci.org/yugr/libdebugme.svg?branch=master)](https://travis-ci.org/yugr/libdebugme)
 [![codecov](https://codecov.io/gh/yugr/libdebugme/branch/master/graph/badge.svg)](https://codecov.io/gh/yugr/libdebugme)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/yugr/libdebugme.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/yugr/libdebugme/alerts/)
