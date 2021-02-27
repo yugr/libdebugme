@@ -67,7 +67,7 @@ int run_gdb(unsigned dbg_flags, const char *dbg_opts) {
                            "%s", (long)ppid, dbg_opts);
       if(nread >= (int)sizeof(buf) - 1) {
         SAFE_MSG("libdebugme: increase size of buffer in run_gdb\n");
-        exit(1);
+        _exit(1);
       }
 
       if(dbg_flags & DEBUGME_XTERM) {
