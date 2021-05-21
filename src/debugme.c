@@ -46,7 +46,7 @@ EXPORT int debugme_install_sighandlers(unsigned dbg_flags_, const char *dbg_opts
   size_t i;
   for(i = 0; i < ARRAY_SIZE(bad_signals); ++i) {
     int sig = bad_signals[i];
-    const char *signame = sys_siglist[sig];
+    const char *signame = strsignal(sig);
     if(debug) {
       fprintf(stderr, "debugme: setting signal handler for signal %d (%s)\n", sig, signame);
     }
