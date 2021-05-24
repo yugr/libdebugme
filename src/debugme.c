@@ -16,6 +16,9 @@
 
 #include <unistd.h>
 
+// Recent Glibc versions do not declare this symbol in signal.h
+extern const char * const sys_siglist[];
+
 unsigned dbg_flags;
 const char *dbg_opts;
 int init_done;
