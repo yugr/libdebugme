@@ -1,8 +1,16 @@
 # TODO:
-# * checkers: sanitizers, valgrind, CSA, Coverity
+# * checkers: sanitizers, valgrind, CSA
 
 name: CI
-on: [push, pull_request]
+on:
+  push:
+    paths-ignore:
+    - 'LICENSE.txt'
+    - 'README.md'
+  pull_request:
+    paths-ignore:
+    - 'LICENSE.txt'
+    - 'README.md'
 jobs:
   Tests:
     strategy:
@@ -19,12 +27,22 @@ jobs:
       run: scripts/travis.sh
   Coverage:
     runs-on: ubuntu-latest
+    environment: secrets
     env:
       COVERAGE: 1
-      CODECOV_TOKEN: a55c21ce-0e07-465b-97fe-34202f889cf8
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     steps:
     - uses: actions/checkout@v2
     - name: Install deps
       run: sudo apt-get -y install gdb
     - name: Run tests
       run: scripts/travis.sh
+  Coverity:
+    runs-on: ubuntu-latest
+    environment: secrets
+    steps:
+    - uses: actions/checkout@v2
+    - uses: vapier/coverity-scan-action@v0
+      with:
+        project: yugr%2Flibdebugme
+        token: ${{ secrets.COVERITY_SCAN_TOKEN }}
