@@ -46,3 +46,4 @@ jobs:
       with:
         project: yugr%2Flibdebugme
         token: ${{ secrets.COVERITY_SCAN_TOKEN }}
+        email: ${{ secrets.EMAIL }}
