@@ -1,12 +1,19 @@
-# Copyright 2016-2019 Yury Gribov
+# Copyright 2016-2021 Yury Gribov
 # 
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE.txt file.
 
 CC ?= gcc
+
 CPPFLAGS = -Iinclude
 CFLAGS = -fPIC -g -fvisibility=hidden -Wall -Wextra -Werror
 LDFLAGS = -fPIC -shared -Wl,--no-allow-shlib-undefined
+
+ifneq (,$(COVERAGE))
+  DEBUG = 1
+  CFLAGS += --coverage -DNDEBUG
+  LDFLAGS += --coverage
+endif
 ifeq (,$(DEBUG))
   CFLAGS += -O2
   LDFLAGS += -Wl,-O2
@@ -20,11 +27,6 @@ endif
 ifneq (,$(UBSAN))
   CFLAGS += -fsanitize=undefined
   LDFLAGS += -fsanitize=undefined
-endif
-ifneq (,$(COVERAGE))
-  DEBUG = 1
-  CFLAGS += -O0 -DNDEBUG --coverage
-  LDFLAGS += --coverage
 endif
 
 DESTDIR = /usr
