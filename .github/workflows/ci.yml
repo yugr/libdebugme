@@ -19,6 +19,8 @@ jobs:
         os: [ubuntu-18.04, ubuntu-20.04, ubuntu-latest]
         cc: [gcc, clang]
     runs-on: ${{ matrix.os }}
+    env:
+      CC: ${{ matrix.cc }}
     steps:
     - uses: actions/checkout@v2
     - name: Install deps
