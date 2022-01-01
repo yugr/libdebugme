@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 Yury Gribov
+ * Copyright 2016-2021 Yury Gribov
  * 
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE.txt file.
