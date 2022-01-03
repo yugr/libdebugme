@@ -42,7 +42,7 @@ INIT static void init(void) {
   int handle_signals = 0;
 
   const char *opts;
-  char *opts_ = 0;
+  char *opts_ = NULL;
   if((opts = getenv("DEBUGME_OPTIONS"))) {
     opts_ = strdup(opts);
 
