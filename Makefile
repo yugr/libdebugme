@@ -47,7 +47,7 @@ install:
 	install -D bin/libdebugme.so $(DESTDIR)/lib
 
 check:
-	@test/test.sh
+	@tests/test.sh
 	@echo SUCCESS
 
 bin/libdebugme.so: $(OBJS) bin/FLAGS Makefile
