@@ -1,4 +1,4 @@
-# Copyright 2016-2021 Yury Gribov
+# Copyright 2016-2022 Yury Gribov
 # 
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE.txt file.
@@ -21,12 +21,18 @@ else
   CFLAGS += -O0
 endif
 ifneq (,$(ASAN))
-  CFLAGS += -fsanitize=address
-  LDFLAGS += -Wl,--allow-shlib-undefined -fsanitize=address
+  CFLAGS += -fsanitize=address -fsanitize-address-use-after-scope -U_FORTIFY_SOURCE -fno-common
+  LDFLAGS += -fsanitize=address
 endif
 ifneq (,$(UBSAN))
-  CFLAGS += -fsanitize=undefined
-  LDFLAGS += -fsanitize=undefined
+  ifneq (,$(shell $(CC) --version | grep clang))
+    # Isan is clang-only...
+    CFLAGS += -fsanitize=undefined,integer -fno-sanitize-recover=undefined,integer
+    LDFLAGS += -fsanitize=undefined,integer -fno-sanitize-recover=undefined,integer
+  else
+    CFLAGS += -fsanitize=undefined -fno-sanitize-recover=undefined
+    LDFLAGS += -fsanitize=undefined -fno-sanitize-recover=undefined
+  endif
 endif
 
 DESTDIR = /usr
@@ -41,7 +47,8 @@ install:
 	install -D bin/libdebugme.so $(DESTDIR)/lib
 
 check:
-	test/test.sh
+	@test/test.sh
+	@echo SUCCESS
 
 bin/libdebugme.so: $(OBJS) bin/FLAGS Makefile
 	$(CC) $(LDFLAGS) $(OBJS) $(LIBS) -o $@

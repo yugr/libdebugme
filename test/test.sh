@@ -18,6 +18,8 @@ CXX=${CXX:-g++}
 
 CFLAGS="-g -O0 ${CFLAGS:-}"
 
+export ASAN_OPTIONS='detect_stack_use_after_return=1:check_initialization_order=1:strict_init_order=1:strict_string_checks=1'
+
 HAS_GCOV=
 if readelf -sW ../bin/libdebugme.so | grep -q gcov_error; then
   HAS_GCOV=1
