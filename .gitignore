@@ -2,5 +2,5 @@ core
 bin/*
 .*.swp
 test.ref
-test/a.out
-test/*.gcov
+a.out
+*.gcov

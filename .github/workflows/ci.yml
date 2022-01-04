@@ -7,10 +7,12 @@ on:
     paths-ignore:
     - 'LICENSE.txt'
     - 'README.md'
+    - '.gitignore'
   pull_request:
     paths-ignore:
     - 'LICENSE.txt'
     - 'README.md'
+    - '.gitignore'
 jobs:
   Tests:
     strategy:
