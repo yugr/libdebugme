@@ -4,6 +4,7 @@
 # found in the LICENSE.txt file.
 
 CC ?= gcc
+DESTDIR ?= /usr/local
 
 CPPFLAGS = -Iinclude
 CFLAGS = -fPIC -g -fvisibility=hidden -Wall -Wextra -Werror
@@ -35,8 +36,6 @@ ifneq (,$(UBSAN))
   endif
 endif
 
-DESTDIR = /usr
-
 OBJS = bin/gdb.o bin/debugme.o bin/init.o bin/common.o
 
 $(shell mkdir -p bin)
@@ -44,6 +43,7 @@ $(shell mkdir -p bin)
 all: bin/libdebugme.so
 
 install:
+	mkdir -p $(DESTDIR)
 	install -D bin/libdebugme.so $(DESTDIR)/lib
 
 check:
