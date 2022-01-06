@@ -41,13 +41,3 @@ jobs:
       run: sudo apt-get -y install gdb
     - name: Run tests
       run: scripts/travis.sh
-  Coverity:
-    runs-on: ubuntu-latest
-    environment: secrets
-    steps:
-    - uses: actions/checkout@v2
-    - uses: vapier/coverity-scan-action@v0
-      with:
-        project: yugr%2Flibdebugme
-        token: ${{ secrets.COVERITY_SCAN_TOKEN }}
-        email: ${{ secrets.EMAIL }}
