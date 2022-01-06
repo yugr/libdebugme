@@ -25,6 +25,10 @@ ifneq (,$(ASAN))
   CFLAGS += -fsanitize=address -fsanitize-address-use-after-scope -U_FORTIFY_SOURCE -fno-common
   LDFLAGS += -fsanitize=address
 endif
+ifneq (,$(MSAN))
+  CFLAGS += -fsanitize=memory -stdlib=libc++
+  LDFLAGS += -fsanitize=memory -stdlib=libc++
+endif
 ifneq (,$(UBSAN))
   ifneq (,$(shell $(CC) --version | grep clang))
     # Isan is clang-only...
@@ -73,8 +77,10 @@ help:
 	@echo ""
 	@echo "Build options:"
 	@echo "  DESTDIR=path  Specify installation root."
+	@echo "  COVERAGE=1    Build with coverage support."
 	@echo "  DEBUG=1       Build debug version of code."
 	@echo "  ASAN=1        Build with ASan checks."
+	@echo "  MSAN=1        Build with MSan checks."
 	@echo "  UBSAN=1       Build with UBSan checks."
 
 clean:
