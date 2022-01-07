@@ -17,7 +17,7 @@ make "$@" clean all
 make "$@" check
 
 # Upload coverage
-if test -n "${CODECOV_TOKEN:-}"; then
+if test -n "${COVERAGE:-}"; then
   curl --retry 5 -s https://codecov.io/bash > codecov.bash
   bash codecov.bash -Z
 fi
