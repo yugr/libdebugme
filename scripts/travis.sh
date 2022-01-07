@@ -18,6 +18,12 @@ make "$@" check
 
 # Upload coverage
 if test -n "${COVERAGE:-}"; then
+  # Collect coverage for DLL
+  mv bin/*.gc[dn][ao] src
+  gcov src/*.gcno
+  # Collect coverage for tests
+  (cd tests && gcov *.gcno)
+  # Upload
   curl --retry 5 -s https://codecov.io/bash > codecov.bash
-  bash codecov.bash -Z
+  bash codecov.bash -Z -X gcov
 fi
