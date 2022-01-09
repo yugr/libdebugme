@@ -29,6 +29,16 @@ jobs:
       run: sudo apt-get -y install gdb
     - name: Run tests
       run: scripts/travis.sh
+  CSA:
+    runs-on: ubuntu-latest
+    env:
+      CC: clang
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install deps
+      run: sudo apt-get install clang-tools
+    - name: Run tests
+      run: scan-build --keep-going --status-bugs make clean all
   Coverage:
     runs-on: ubuntu-latest
     environment: secrets
