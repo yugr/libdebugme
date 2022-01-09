@@ -1,5 +1,5 @@
 # TODO:
-# * checkers: sanitizers, valgrind, CSA
+# * checkers: sanitizers, valgrind ?
 
 name: CI
 on:
