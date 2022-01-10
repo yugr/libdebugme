@@ -2,7 +2,7 @@ name: Coverity
 on:
   schedule:
     # Run on Mondays
-    - cron: '* * * * MON'
+    - cron: '0 5 * * MON'
 jobs:
   Coverity:
     runs-on: ubuntu-latest
