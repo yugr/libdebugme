@@ -101,9 +101,10 @@ EXPORT int debugme_debug(unsigned dbg_flags_, const char *dbg_opts_) {
 
   __debugme_go = 0;
 
-#ifdef __x86_64__
+#if defined(__i386__) || defined(__x86_64__)
   asm volatile("int $3;");
 #else
+  // TODO: ARM
   raise(SIGTRAP);
 #endif
 
