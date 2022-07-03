@@ -61,8 +61,6 @@ int run_gdb(unsigned dbg_flags, const char *dbg_opts) {
                            "-ex 'set __debugme_go=1' "
                            // Wait untils it breaks
                            "-ex continue "
-                           // Return from raise()
-                           "-ex finish "
                            // Give control to user
                            "%s", (long)ppid, dbg_opts);
       if(nread >= (int)sizeof(buf) - 1) {

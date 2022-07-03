@@ -101,9 +101,14 @@ EXPORT int debugme_debug(unsigned dbg_flags_, const char *dbg_opts_) {
       return 0;
     }
   }
+
   __debugme_go = 0;
 
+#ifdef __x86_64__
+  asm volatile("int $3;");
+#else
   raise(SIGTRAP);
+#endif
 
   in_debugme_debug = 0;
   return 1;
